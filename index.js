@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;  // Changed this line
 
 // Initialize dotenv for environment variables
 require('dotenv').config();
@@ -25,3 +25,4 @@ app.use(express.static('public'));
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
+
