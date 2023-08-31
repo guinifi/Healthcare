@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - LiveDocAppService2023
+name: Build and deploy Node.js app to Azure Web App - Livedocappservice
 
 on:
   push:
@@ -11,13 +11,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Changed to ubuntu for consistency
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2  # Updated to v2
         with:
           node-version: '18.x'
 
@@ -47,10 +47,18 @@ jobs:
           name: node-app
 
       - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
         with:
-          app-name: 'LiveDocAppService2023'
+          app-name: 'Livedocappservice'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_35FE71708F8D42B285FAA0676F2A5BEB }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_97B005E133084A7FA17555560B17F3EB }}
           package: .
+
+      # Additional debugging information
+      - name: Debugging Step (Optional)
+        if: failure()  # This step will run if the job has failed
+        run: |
+          echo "Deployment has failed. Printing debug information..."
+          env  # Print environment variables
+
